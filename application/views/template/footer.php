@@ -1,5 +1,5 @@
 <footer class="main-footer">
-    <strong>Copyright &copy; <?= ((date('Y') - 2020) == 0) ? "2020" : "2020-" . date('Y'); ?> <a href="<?= base_url() ?>dashboard">Doomu</a>.</strong>
+    <strong>Copyright &copy; <?= ((date('Y') - 2020) == 0) ? "2020" : "2020-" . date('Y'); ?> <a href="<?= base_url() ?>dashboard">SHRA</a>.</strong>
     All rights reserved.
     <!-- <div class="float-right d-none d-sm-inline-block">
         <b>Version</b>
