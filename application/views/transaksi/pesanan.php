@@ -53,6 +53,7 @@
                                     <th>Pemesan</th>
                                     <th>Alamat Transaksi</th>
                                     <th>No HP</th>
+                                    <th>Tanggal</th>
                                     <th>Detail</th>
                                 </tr>
                             </thead>
@@ -66,8 +67,10 @@
                                             <td><?= $no++; ?></td>
                                             <td><?= $row->kode_transaksi ?></td>
                                             <td><?= $row->user->nama_user ?></td>
-                                            <td><?= $row->alamatdetail_transaksi . ", " . $row->alamat_transaksi ?></td>
+                                            <td><?php $limited_word = word_limiter($row->alamat_transaksi, 9);
+                                                echo $limited_word; ?></td>
                                             <td><?= $row->nohp_transaksi ?></td>
+                                            <td><?= $row->created_at ?></td>
                                             <td>
                                                 <a href="<?= base_url() ?>transaksi/detail_pesanan/<?= $row->id_transaksi ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
                                             </td>

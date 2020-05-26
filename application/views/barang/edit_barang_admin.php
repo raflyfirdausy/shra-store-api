@@ -35,6 +35,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4">
+                                        <label for="imgInp">Foto Barang</label>
                                         <div class="media" style="max-height: 360px;margin-bottom: 20px;">
                                             <div class="social-profile">
                                                 <?php if ($data['foto_barang']) : ?>
@@ -47,11 +48,12 @@
                                                         <label for="imgInp">
                                                             <i for="imgInp" class="fa fa-pencil-alt p-r-10 c-pointer"></i>
                                                         </label>
-                                                        <input id="imgInp" type="file" name="foto_masterbarang">
+                                                        <input id="imgInp" type="file" name="foto_masterbarang" accept="image/*">
                                                         <input type="hidden" name="foto_lama" value="<?= $data['foto_barang'] ?>">
                                                         <i id="imgdel" class="fa fa-trash c-pointer"></i>
                                                     </div>
                                                 </div>
+                                                <b>Catatan : </b>Ukuran gambar maksimal 2MB
                                             </div>
                                         </div>
                                     </div>

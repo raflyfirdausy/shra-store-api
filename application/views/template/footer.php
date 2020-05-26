@@ -1,5 +1,5 @@
 <footer class="main-footer">
-    <strong>Copyright &copy; 2020 <a href="<?= base_url() ?>dashboard">Doomu</a>.</strong>
+    <strong>Copyright &copy; <?= ((date('Y') - 2020) == 0) ? "2020" : "2020-" . date('Y'); ?> <a href="<?= base_url() ?>dashboard">Doomu</a>.</strong>
     All rights reserved.
     <!-- <div class="float-right d-none d-sm-inline-block">
         <b>Version</b>
@@ -19,7 +19,10 @@
 <script src="<?= base_url() ?>assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <!-- Bootstrap4 Duallistbox -->
 <script src="<?= base_url() ?>assets/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
-
+<!-- InputMask -->
+<script src="<?= base_url() ?>assets/plugins/moment/moment.min.js"></script>
+<script src="<?= base_url() ?>assets/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+<!-- Toastr -->
 <script src="<?= base_url() ?>assets/plugins/toastr/toastr.min.js"></script>
 <!-- SweetAlert2 -->
 <script src="<?= base_url() ?>assets/plugins/sweetalert2/sweetalert2.min.js"></script>
@@ -30,24 +33,43 @@
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="<?= base_url(); ?>assets/js/demo.js"></script>
-<script src="<?= base_url(); ?>assets/js/custom.js"></script>
-
-<?php if ($this->uri->segment(1) == "dashboard") : ?>
-    <!-- PAGE PLUGINS -->
-    <!-- jQuery Mapael -->
-    <script src="<?= base_url(); ?>assets/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="<?= base_url(); ?>assets/plugins/raphael/raphael.min.js"></script>
-    <script src="<?= base_url(); ?>assets/plugins/jquery-mapael/jquery.mapael.min.js"></script>
-    <script src="<?= base_url(); ?>assets/plugins/jquery-mapael/maps/usa_states.min.js"></script>
-    <!-- ChartJS -->
-    <script src="<?= base_url(); ?>assets/plugins/chart.js/Chart.min.js"></script>
-    <!-- PAGE SCRIPTS -->
-    <script src="<?= base_url(); ?>assets/js/pages/dashboard2.js"></script>
-<?php endif ?>
 
 <!-- page script -->
 <script>
     $(function() {
+        $('#table').DataTable({
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            "language": {
+                "search": "Cari",
+                "lengthMenu": "Tampilkan _MENU_",
+                "zeroRecords": "Tidak Ada Data",
+                "info": "Menampilkan _PAGE_ dari _PAGES_",
+                "infoEmpty": "Tidak Ada Data",
+                "infoFiltered": "(difilter dari sebanyak _MAX_)"
+            }
+        });
+
+        $('#tabel_pesanan').DataTable({
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            "language": {
+                "search": "Cari",
+                "lengthMenu": "Tampilkan _MENU_",
+                "zeroRecords": "Tidak Ada Data",
+                "info": "Menampilkan _PAGE_ dari _PAGES_",
+                "infoEmpty": "Tidak Ada Data",
+                "infoFiltered": "(difilter dari sebanyak _MAX_)"
+            }
+        });
+
+        //Bootstrap Duallistbox
+        $('.duallistbox').bootstrapDualListbox()
+
         const Toast = Swal.mixin({
             toast: true,
             position: 'bottom-end',
@@ -70,13 +92,40 @@
                 text: "<?= $this->session->flashdata("gagal") ?>",
             })
         <?php endif ?>
+
+        $('[data-mask]').inputmask()
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#imgprev').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgInp").change(function() {
+            readURL(this);
+        });
+
+        $('#imgdel').on('click', function() {
+            <?php if ($this->uri->segment(1) == "banner") : ?>
+                $('#imgprev').attr('src', "<?= base_url() ?>assets/banner/banner1.jpg");
+            <?php else : ?>
+                $('#imgprev').attr('src', "<?= base_url() ?>assets/img/no-img.jpg");
+            <?php endif ?>
+            $('#imgInp').val("");
+        });
+
     });
 </script>
 
 <?php
 if ($this->userData->level_admin == LEVEL_ADMIN) : ?>
     <audio id="myAudio">
-        <source src="<?= asset("ringtone/bell.mp3") ?>" type="audio/mpeg">
+        <source src="<?= asset("ringtone/order_masuk.mp3") ?>" type="audio/mpeg">
     </audio>
     <script>
         function cekPesanan() {
@@ -93,7 +142,7 @@ if ($this->userData->level_admin == LEVEL_ADMIN) : ?>
                     console.log(e);
                     if (e.status) {
                         bell.play();
-                        if ("<?= $this->router->fetch_class()  ?>" != "transaksi") {
+                        if ("<?= $this->router->fetch_class()  ?>" != "transaksi" || "<?= $this->router->fetch_class() . '/' . $this->router->fetch_method(); ?>" == "transaksi/history") {
                             $(function() {
                                 const Toast = Swal.mixin({
                                     toast: true,

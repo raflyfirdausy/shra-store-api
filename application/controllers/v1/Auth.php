@@ -49,7 +49,7 @@ class Auth extends REST_Controller
             return $this->response(array(
                 "status"                => true,
                 "response_code"         => REST_Controller::HTTP_EXPECTATION_FAILED,
-                "response_message"      => "Data berhasil di update",                
+                "response_message"      => "Nomer Handphone sudah terdaftar, silahkan gunakan yang lainya",                
             ), REST_Controller::HTTP_OK);
         }
     }

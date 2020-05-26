@@ -102,7 +102,7 @@ $autoload['helper'] = array(
     "download",
     "inflector",
     "date",
-    
+    "text",
     //TAMBAHAN
     'utility',
     'inno'

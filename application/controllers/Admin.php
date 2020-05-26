@@ -12,7 +12,7 @@ class Admin extends SuperAdmin_Controller
 
     public function index()
     {
-        $isi['data'] = $this->admin->with_toko()->as_object()->get_all();
+        $isi['data'] = $this->admin->with_toko()->where('level_admin !=', LEVEL_SUPER_ADMIN)->as_object()->get_all();
         $isi['data_toko'] = $this->toko->as_object()->get_all();
         $this->loadViewAdmin("admin/index", $isi);
     }

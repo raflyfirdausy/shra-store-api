@@ -23,15 +23,16 @@ class Toko extends BaseAdmin_Controller
 
     public function proses_simpan_toko()
     {
+        $no_toko = preg_replace("/[_ -]/", "", $this->input->post('no_toko'));
+
         $data['nama_toko']            = $this->input->post('nama_toko');
         $data['alamat_toko']          = $this->input->post('alamat_toko');
-        $data['no_toko']              = $this->input->post('no_toko');
+        $data['no_toko']              = $no_toko;
         $data['min_km_toko']          = $this->input->post('min_km_toko');
         $data['ongkir_toko']          = $this->input->post('ongkir_toko');
         $data['ongkirtambahan_toko']  = $this->input->post('ongkirtambahan_toko');
         $data['latitude_toko']        = $this->input->post('latitude_toko');
         $data['longitude_toko']       = $this->input->post('longitude_toko');
-        
         $insert = $this->toko->insert($data);
         if ($insert) { // Jika berhasil
             $this->session->set_flashdata('sukses', $data['nama_mastertoko'] . " Berhasil di tambahkan");
@@ -55,11 +56,13 @@ class Toko extends BaseAdmin_Controller
     {
         $level = $this->userData->level_admin;
         $id_toko = $this->input->post("id_toko");
+        $no_toko = preg_replace("/[_ -]/", "", $this->input->post('no_toko'));
+
         $dataUpdate     = [
             "nama_toko"             => $this->input->post('nama_toko'),
             "alamat_toko"           => $this->input->post('alamat_toko'),
             "min_km_toko"           => $this->input->post('min_km_toko'),
-            "no_toko"               => $this->input->post('no_toko'),
+            "no_toko"               => $no_toko,
             "ongkir_toko"           => $this->input->post('ongkir_toko'),
             "ongkirtambahan_toko"   => $this->input->post('ongkirtambahan_toko'),
             "latitude_toko"         => $this->input->post('latitude_toko'),

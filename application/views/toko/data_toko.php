@@ -32,7 +32,7 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <h3 class="text-primary"><?= $data['nama_toko'] ?></h3>
-                            <p class="text-muted">No HP <b class="d-block"><?= $data['no_toko'] ?></b></p>
+                            <p class="text-muted">No Telp <b class="d-block"><?= $data['no_toko'] ?></b></p>
                             <p class="text-muted">Alamat <b class="d-block"><?= $data['alamat_toko'] ?></b></p>
                             <p class="text-muted">On Maps <b class="d-block"><?= $data['latitude_toko'] ?>, <?= $data['longitude_toko'] ?></b></p>
                             
@@ -75,8 +75,8 @@
                                             <textarea required name="alamat_toko" id="alamat_toko" class="form-control" cols="30" rows="5"><?= $data['alamat_toko'] ?></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="no_toko">No Telp (Gunakan format +62)</label>
-                                            <input required type="text" class="form-control" id="no_toko" placeholder="Masukkan no telp. toko" name="no_toko" value="<?= $data['no_toko'] ?>">
+                                            <label for="no_toko">No Telp Toko</label>
+                                            <input type="text" class="form-control" data-inputmask="'mask': ['+62999-9999-9999', '+62 99 99 9999']" data-mask="" im-insert="true" required placeholder="Masukkan no telp toko" name="no_toko" id="no_toko" value="<?= $data['no_toko'] ?>" minlength="10">
                                         </div>
                                     </div>
                                     <div class="col-md-6">

@@ -35,6 +35,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4">
+                                        <label for="imgInp">Foto Barang</label>
                                         <div class="media" style="max-height: 360px;margin-bottom: 20px;">
                                             <div class="social-profile">
                                                 <img class="img-fluid p-0" id="imgprev" src="<?= base_url() ?>assets/img/no-img.jpg" alt="">
@@ -47,12 +48,13 @@
                                                         <i id="imgdel" class="fa fa-trash c-pointer"></i>
                                                     </div>
                                                 </div>
+                                                <b>Catatan : </b>Ukuran gambar maksimal 2MB
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label for="id_masterbarang">Kode Barang</label>
+                                            <label for="kode_barang">Kode Barang</label>
                                             <input required type="text" class="form-control" id="kode_barang" placeholder="Masukkan Kode Barang" name="kode_barang">
                                         </div>
                                         <div class="form-group">

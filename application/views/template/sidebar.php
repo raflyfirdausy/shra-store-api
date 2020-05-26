@@ -2,8 +2,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?= base_url() ?>dashboard" class="brand-link mx-0">
-        <img src="<?= base_url() ?>assets/img/doomuLogo_white.png" alt="Doomu Logo" class="brand-image elevation-3" style="opacity: .8">
-        <!-- <span class="brand-text font-weight-light">Kopkun Sale</span> -->
+        <img src="<?= base_url() ?>assets/img/doomuIcon_White.png" alt="Doomu Logo" class="brand-image" style="opacity: .8;">
+        <span class="brand-text font-weight-light" style="font-weight: 500!important;margin-left : 10px;"><b>Doomu</b></span>
     </a>
 
     <!-- Sidebar -->
@@ -64,6 +64,15 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="<?= base_url() ?>banner" class="nav-link
+                    <?= ($this->uri->segment(1) == "banner") ? "active" : ""; ?>">
+                            <i class="nav-icon fas fa-image"></i>
+                            <p>
+                                Master Data Banner
+                            </p>
+                        </a>
+                    </li>
                 <?php endif ?>
 
                 <?php if ($this->userData->level_admin == LEVEL_ADMIN) : ?>
@@ -97,7 +106,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="<?= base_url() ?>transaksi/pesanan_masuk" class="nav-link <?= ($this->uri->segment(2) == "pesanan_masuk" || $this->uri->segment(2) == "detail_pesanan") ? "active" : "" ?>">
+                                <a href="<?= base_url() ?>transaksi/pesanan_masuk" class="nav-link <?= ($this->uri->segment(2) == "pesanan_masuk") ? "active" : "" ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Pesanan Masuk</p>
                                 </a>

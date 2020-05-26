@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" href="<?= base_url(); ?>assets/img/doomuIcon.png" type="image/png" />
     <title><?= $app_name ?> | <?= $title ?></title>
 
     <!-- Font Awesome Icons -->
@@ -106,7 +107,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <a href="<?= base_url('profil') ?>" class="dropdown-item">
-                            <i class="fa fa-cog mr-2"></i> Profil
+                            <i class="fa fa-cog mr-2"></i> Profil Saya
                         </a>
                         <?php if ($this->userData->level_admin == LEVEL_ADMIN) : ?>
                             <!-- <a href="#" class="dropdown-item">

@@ -44,26 +44,28 @@
                             </thead>
                             <tbody>
                                 <?php
-                                $no = 1;
+                                if ($data) :
+                                    $no = 1;
 
-                                foreach ($data as $row) {
+                                    foreach ($data as $row) :
                                 ?>
-                                    <tr>
-                                        <td><?= $no++; ?></td>
-                                        <td><?= $row->nama_admin ?></td>
-                                        <td><?= ($row->level_admin == 0) ? "Superadmin" : "Admin" ?></td>
-                                        <td>
-                                            <?php foreach ($data_toko as $row2) { ?>
-                                                <?= ($row2->id_toko == $row->id_toko) ? $row2->nama_toko : "" ?>
-                                            <?php } ?>
-                                        </td>
-                                        <td>
-                                            <a href="<?= base_url() ?>admin/edit_admin/<?= $row->id_admin ?>" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a>
-                                            <a href="<?= base_url() ?>admin/delete_admin/<?= $row->id_admin ?>" class="btn btn-danger" onclick="return confirm('Hapus data admin ini?');"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td><?= $no++; ?></td>
+                                            <td><?= $row->nama_admin ?></td>
+                                            <td><?= ($row->level_admin == 0) ? "Superadmin" : "Admin" ?></td>
+                                            <td>
+                                                <?php foreach ($data_toko as $row2) { ?>
+                                                    <?= ($row2->id_toko == $row->id_toko) ? $row2->nama_toko : "" ?>
+                                                <?php } ?>
+                                            </td>
+                                            <td>
+                                                <a href="<?= base_url() ?>admin/edit_admin/<?= $row->id_admin ?>" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a>
+                                                <a href="<?= base_url() ?>admin/delete_admin/<?= $row->id_admin ?>" class="btn btn-danger" onclick="return confirm('Hapus data admin ini?');"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
                                 <?php
-                                }
+                                    endforeach;
+                                endif;
                                 ?>
                             </tbody>
                         </table>

@@ -60,6 +60,7 @@ class Transaksi extends BaseAdmin_Controller
             ->with_user()
             ->with_toko()
             ->with_detail_transaksi(["with"  => ["relation"  => "barang"]])
+            ->where('id_toko', $this->userData->id_toko)
             ->as_object()
             ->get($key);
             
@@ -74,8 +75,7 @@ class Transaksi extends BaseAdmin_Controller
             ->with_toko()
             ->with_detail_transaksi(["with"  => ["relation"  => "barang"]])
             ->where('id_toko', $this->userData->id_toko)
-            ->where('status_transaksi', SELESAI_TERKIRIM)
-            ->or_where('status_transaksi', DIBATALKAN)
+            ->where('status_transaksi', array(SELESAI_TERKIRIM, DIBATALKAN))
             ->as_object()
             ->order_by("created_at", "DESC")
             ->get_all();
@@ -107,15 +107,15 @@ class Transaksi extends BaseAdmin_Controller
             if ($update) {
                 $dataNotifikasi = array(
                     "id_user"   => $getData->user->id_user,
-                    "title"     => "Yeay! pesananmu sedang kami proses 🤗",
-                    "message"   => "Pesanan dengan kode transaksi " . $getData->kode_transaksi . " sedang kami proses. Silahkan ditunggu ya, driver kami segera mengantar ke alamat tujuanmu. pastikan No hp kamu selalu aktif dan siapkan uang pas ya! ☺ ",
+                    "title"     => "Yeay! Pesananmu sedang kami proses 🤗",
+                    "message"   => "Pesanan dengan invoice " . $getData->kode_transaksi . " sedang diproses. Silahkan tunggu, kurir segera antar. Pastikan ponsel aktif dan siapkan uang pas ya! ☺",
                 );
                 $data = array(
                     'to' => $getData->user->token_user,
                     'data' => $dataNotifikasi,
                 );
                 sendPushNotification($data);
-                $this->session->set_flashdata('sukses', "<p>Pemesanan telah Anda konfirmasi, harap segera proses pesanan tersebut.</p><p>Cek halaman \"Pesanan Diproses\" untuk selengkapnya</p>");
+                $this->session->set_flashdata('sukses', "Pesanan telah dikonfirmasi. Segera proses pesanan tersebut");
             } else {
                 $this->session->set_flashdata('gagal', "Status pesanan gagal diubah");
             }
@@ -128,15 +128,15 @@ class Transaksi extends BaseAdmin_Controller
             if ($update) {
                 $dataNotifikasi = array(
                     "id_user"   => $getData->user->id_user,
-                    "title"     => "Terimakasih sudah belanja menggunakan aplikasi Doomu",
-                    "message"   => "Kami tunggu orderan selanjutnya ya 😍😍",
+                    "title"     => "Terimakasih sudah belanja pakai aplikasi Doomu",
+                    "message"   => "Kami tunggu orderan selanjutnya ya 😍",
                 );
                 $data = array(
                     'to' => $getData->user->token_user,
                     'data' => $dataNotifikasi,
                 );
                 sendPushNotification($data);
-                $this->session->set_flashdata('sukses', "Pesanan telah dikirimkan. Data pesanan masuk ke halaman \"Pesanan Selesai\"");
+                $this->session->set_flashdata('sukses', "Pesanan telah dikirimkan.");
             } else {
                 $this->session->set_flashdata('gagal', "Status pesanan gagal diubah");
             }
@@ -172,7 +172,7 @@ class Transaksi extends BaseAdmin_Controller
                 $dataNotifikasi = array(
                     "id_user"   => $getData->user->id_user,
                     "title"     => "Pesananmu telah dibatalkan oleh Admin",
-                    "message"   => "Pesanan dengan kode transaksi " . $getData->kode_transaksi . " telah dibatalkan oleh Admin. Hubungi Admin jika bukan kesepakatan Anda dengan Admin",
+                    "message"   => "Pesanan dengan invoice " . $getData->kode_transaksi . " telah dibatalkan oleh Admin. Hubungi Admin jika bukan kesepakatan Anda dengan Admin",
                 );
                 $data = array(
                     'to' => $getData->user->token_user,

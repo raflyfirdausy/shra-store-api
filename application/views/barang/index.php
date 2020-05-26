@@ -91,7 +91,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Import Data Barang</h4>
+          <h4 class="modal-title">Unggah Data Barang</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
 
@@ -99,11 +99,25 @@
         <div class="modal-body">
           <form method="POST" action="<?= base_url() ?>barang/upload_databarang" enctype="multipart/form-data">
             <div class="form-group">
-              <label for="exampleInputEmail1">Unggah Data Barang (.xlsx/.xls/.csv)</label>
+              <label for="exampleInputEmail1">Pilih Data Barang (.xlsx/.xls/.csv)</label>
               <input type="file" name="userfile" class="form-control">
             </div>
             <button type="submit" class="btn btn-primary">Upload Data</button>
           </form>
+          <hr>
+          <div class="form-group">
+            Contoh susunan dalam file excel :
+            <img src="<?= base_url() ?>assets/img/contoh2.jpg" alt="" style="width: 100%;">
+          </div>
+          <div class="row">
+            <div class="col-md-2"><b>Catatan :</b></div>
+            <div class="col-md-10">
+              1. Kode dan Nama Barang tidak boleh kosong. Barang dengan kode atau nama yang kosong tidak akan ikut diunggah.<br>
+              2. Pastikan tidak ada data barang yang sama.
+              <br>
+              3. Harga jual gunakan format number.
+            </div>
+          </div>
         </div>
 
         <!-- Modal footer -->
@@ -155,6 +169,7 @@
               <!-- /.col -->
             </div>
             <!-- /.row -->
+            <b>Catatan : </b>Barang yang sudah pernah dipilih tidak dapat dikembalikan
         </div>
 
         <!-- Modal footer -->

@@ -45,7 +45,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="no_toko">No Telp Toko</label>
-                                            <input required type="text" class="form-control" id="no_toko" placeholder="Masukkan No Telp toko" name="no_toko" value="<?= $data['no_toko'] ?>">
+                                            <input type="text" class="form-control" data-inputmask="'mask': ['+62999-9999-9999', '+62 99 99 9999']" data-mask="" im-insert="true" required placeholder="Masukkan no telp toko" name="no_toko" id="no_toko" value="<?= $data['no_toko'] ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">

@@ -18,14 +18,14 @@ class Barang extends BaseAdmin_Controller
         if ($level == LEVEL_SUPER_ADMIN) {
             $getData = $this->master_barang->with_kategori()->as_object()->get_all();
             // if (!$getData) { // Kalo datane ga ada, antisipasi inject URL
-            //     redirect(base_url("barang"));
-            // }
+            //     redirect(base_url("dashboard"));
+            // } // Bikin error pas barang kosong semua kalo ditambah ini
             $isi['data'] = $getData;
         } elseif ($level == LEVEL_ADMIN) {
             $getData_Barang    = $this->master_barang->as_object()->get_all();
             $getData = $this->barang->with_kategori()->where('id_toko', $idtoko)->as_object()->get_all();
             if (!$getData && !$getData_Barang) { // Kalo datane ga ada, antisipasi inject URL
-                redirect(base_url("barang"));
+                redirect(base_url("dashboard"));
             }
             $isi['data'] = $getData;
             $isi['data_barang'] = $getData_Barang;
@@ -43,7 +43,31 @@ class Barang extends BaseAdmin_Controller
     public function proses_simpan_barang()
     {
         $level = $this->userData->level_admin;
+        $key = $this->input->post('kode_barang');
+        $getData = $this->master_barang->where('kode_barang', $key)->get_all();
+        $getDataB = $this->barang->where('kode_barang', $key)->get_all();
 
+        if ($level == LEVEL_SUPER_ADMIN) {
+            if ($getData) {
+                foreach ($getData as $data_barang) {
+                    $kode_barang[] = $data_barang['kode_barang'];
+                }
+                if (in_array($key, $kode_barang)) {
+                    $this->session->set_flashdata('gagal', 'Kode Barang sudah ada.');
+                    redirect('barang/tambah_barang');
+                }
+            }
+        } elseif ($level == LEVEL_ADMIN) {
+            if ($getDataB) {
+                foreach ($getDataB as $data_barang) {
+                    $kode_barang[] = $data_barang['kode_barang'];
+                }
+                if (in_array($key, $kode_barang)) {
+                    $this->session->set_flashdata('gagal', 'Kode Barang sudah ada.');
+                    redirect('barang/tambah_barang');
+                }
+            }
+        }
         // Upload foto
         if ($_FILES['foto_masterbarang']['name'] != "") {
             $namafile = $this->userData->id_toko . "" . time(); //? RENAME NAMA FILE PAKE UNIXTIMESTAMP
@@ -54,16 +78,14 @@ class Barang extends BaseAdmin_Controller
                 "file_ext_tolower"  => FALSE,
                 "overwrite"         => TRUE,
                 "remove_spaces"     => TRUE,
-                "file_name"         => $namafile
+                "file_name"         => $namafile,
             ];
 
-            // $config['max_size']             = 2000;
-            // $config['max_width']            = 400;
-            // $config['max_height']           = 400;
             $this->upload->initialize($config);
 
             if (!$this->upload->do_upload('foto_masterbarang')) {
                 $this->session->set_flashdata('gagal', $this->upload->display_errors());
+                redirect('barang/tambah_barang');
             } else {
                 $upload_data = $this->upload->data();
                 $image_name = $upload_data['file_name'];
@@ -123,6 +145,33 @@ class Barang extends BaseAdmin_Controller
     public function proses_update_barang()
     {
         $level = $this->userData->level_admin;
+        $key = $this->input->post('kode_barang');
+        $getData = $this->master_barang->where('kode_barang', $key)->get_all();
+        $getDataB = $this->barang->where('kode_barang', $key)->get_all();
+
+        if ($level == LEVEL_SUPER_ADMIN) {
+            $id = $this->input->post("id_masterbarang");
+            if ($getData) {
+                foreach ($getData as $data_barang) {
+                    $kode_barang[] = $data_barang['kode_barang'];
+                }
+                if (in_array($key, $kode_barang)) {
+                    $this->session->set_flashdata('gagal', 'Kode Barang sudah ada.');
+                    redirect('barang/edit_barang/' . $id);
+                }
+            }
+        } elseif ($level == LEVEL_ADMIN) {
+            $id = $this->input->post("id_barang");
+            if ($getDataB) {
+                foreach ($getDataB as $data_barang) {
+                    $kode_barang[] = $data_barang['kode_barang'];
+                }
+                if (in_array($key, $kode_barang)) {
+                    $this->session->set_flashdata('gagal', 'Kode Barang sudah ada.');
+                    redirect('barang/edit_barang/' . $id);
+                }
+            }
+        }
         // Upload foto
         if ($_FILES['foto_masterbarang']['name'] != "") {
             $namafile = $this->userData->id_toko . "" . time(); //? RENAME NAMA FILE PAKE UNIXTIMESTAMP
@@ -142,7 +191,9 @@ class Barang extends BaseAdmin_Controller
             $this->upload->initialize($config);
 
             if (!$this->upload->do_upload('foto_masterbarang')) {
-                $this->session->set_flashdata('gagal', $this->upload->display_errors());
+                $this->session->set_flashdata('gagal', 'Gambar gagal diupload. Cek ketentuan.');
+                ($level == LEVEL_SUPER_ADMIN) ? $id = $this->input->post("id_masterbarang") : $id = $this->input->post("id_barang");
+                redirect('barang/edit_barang/' . $id);
             } else {
                 $old = $this->input->post('foto_lama');
                 if ($_FILES['foto_masterbarang']['name'] != $old) {
@@ -259,32 +310,30 @@ class Barang extends BaseAdmin_Controller
                 }
                 foreach ($sheet as $row) {
                     if ($numrow > 1) {
-                        if (!in_array($row['B'], $kode_barang)) {
+                        if ($row['B'] != "" && $row['C'] != "" && !in_array($row['B'], $kode_barang)) {
                             array_push($data, array(
                                 'kode_barang'               => $row['B'],
                                 'nama_masterbarang'         => $row['C'],
                                 'hargajual_masterbarang'    => $row['D'],
                             ));
-                        } else {
-                            $data = null;
                         }
                     }
                     $numrow++;
                 }
             } else {
-                // d($data);
                 foreach ($sheet as $row) {
                     if ($numrow > 1) {
-                        array_push($data, array(
-                            'kode_barang'               => $row['B'],
-                            'nama_masterbarang'         => $row['C'],
-                            'hargajual_masterbarang'    => $row['D'],
-                        ));
+                        if ($row['B'] != "" && $row['C'] != "") {
+                            array_push($data, array(
+                                'kode_barang'               => $row['B'],
+                                'nama_masterbarang'         => $row['C'],
+                                'hargajual_masterbarang'    => $row['D'],
+                            ));
+                        }
                     }
                     $numrow++;
                 }
             }
-            // d($data);
             if ($data != null) {
                 $insert = $this->db->insert_batch('master_barang', $data);
                 if ($insert) { //upload success
@@ -334,8 +383,6 @@ class Barang extends BaseAdmin_Controller
                         'hargadiskon_barang'    =>  null,
                         'foto_barang'           =>  empty($data_master['foto_masterbarang']) ? null : $data_master['foto_masterbarang'],
                     ));
-                } else {
-                    $dataInsert = null;
                 }
             }
         } else {

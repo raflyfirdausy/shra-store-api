@@ -27,8 +27,10 @@ class Transaksi extends REST_Controller
 
         $listTransaksi = $this->transaksi
             ->where($kondisi)
+            ->group_start()
             ->where("status_transaksi", "=", SELESAI_TERKIRIM, FALSE)
             ->where("status_transaksi", "=", DIBATALKAN, TRUE)
+            ->group_end()
             ->with_user()
             ->with_toko()
             ->with_detail_transaksi(["with"  => ["relation"  => "barang"]])
@@ -57,7 +59,7 @@ class Transaksi extends REST_Controller
             return $this->response(array(
                 "status"                => true,
                 "response_code"         => REST_Controller::HTTP_OK,
-                "response_message"      => "Transaksi berhasil ditemukan",
+                "response_message"      => "Transaksi berhasil ditemukan",                
                 "data"                  => $listTransaksi
             ), REST_Controller::HTTP_OK);
         } else {
@@ -83,8 +85,10 @@ class Transaksi extends REST_Controller
 
         $listTransaksi = $this->transaksi
             ->where($kondisi)
+            ->group_start()
             ->where("status_transaksi", "=", BELUM_DIPROSES, FALSE)
             ->where("status_transaksi", "=", SEDANG_DIPROSES, TRUE)
+            ->group_end()
             ->with_user()
             ->with_toko()
             ->with_detail_transaksi(["with"  => ["relation"  => "barang"]])

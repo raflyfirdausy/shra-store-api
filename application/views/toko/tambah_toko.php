@@ -45,9 +45,10 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="no_toko">No Telp Toko</label>
-                                            <input required type="text" class="form-control" id="no_toko" placeholder="Masukkan no telp toko" name="no_toko" required>
+                                            <input type="text" class="form-control" data-inputmask="'mask': ['+62999-9999-9999', '+62 99 99 9999']" placeholder="Masukkan no telp toko" name="no_toko" id="no_toko" required data-mask="" im-insert="true">
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -71,13 +72,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="ongkir">Ongkir Toko</label>
-                                                    <input required type="text" class="form-control" id="ongkir" placeholder="Masukkan Ongkos Kirim Toko" name="ongkir_toko" required>
+                                                    <input required type="number" class="form-control" id="ongkir" placeholder="Masukkan Ongkos Kirim Toko" name="ongkir_toko" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="ongkir_tambahan">Ongkir Tambahan Toko</label>
-                                                    <input required type="text" class="form-control" id="ongkir_tambahan" placeholder="Masukkan Ongkir Tambahan Toko" name="ongkirtambahan_toko">
+                                                    <input required type="number" class="form-control" id="ongkir_tambahan" placeholder="Masukkan Ongkir Tambahan Toko" name="ongkirtambahan_toko">
                                                 </div>
                                             </div>
                                         </div>

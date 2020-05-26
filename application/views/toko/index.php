@@ -34,7 +34,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive">
-                        <table id="table" class="table table-bordered table-hover display responsive nowrap" width="100%">
+                        <table id="table" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -54,7 +54,8 @@
                                         <tr>
                                             <td><?= $no++; ?></td>
                                             <td><?= $row->nama_toko ?></td>
-                                            <td><?= $row->alamat_toko ?></td>
+                                            <td><?php $limited_word = word_limiter($row->alamat_toko, 7);
+                                                echo $limited_word; ?></td>
                                             <td><?= $row->no_toko ?></td>
                                             <td>
                                                 <a href="<?= base_url() ?>toko/edit_toko/<?= $row->id_toko ?>" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a>

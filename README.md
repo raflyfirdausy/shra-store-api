@@ -1,2 +1,2 @@
-# shra-store-api
-SHRA Store API
+# inno-market-web
+Project Inno Market

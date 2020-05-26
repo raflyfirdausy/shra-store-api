@@ -9,22 +9,17 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url() ?>dashboard">Home</a></li>
-                        <?php if ($this->uri->segment(2) == "detail_pesanan") : ?>
-                            <li class="breadcrumb-item"><a href="<?= base_url('transaksi/pesanan_masuk') ?>">Pesanan Masuk</a></li>
-                        <?php else : ?>
-                            <li class="breadcrumb-item">Pesanan</li>
+                        <li class="breadcrumb-item"><a href="<?= base_url('dashboard') ?>">Home</a></li>
+                        <?php if ($data->status_transaksi == BELUM_DIPROSES) : ?>
+                            <li class="breadcrumb-item">Transaksi Masuk</li>
+                        <?php elseif ($data->status_transaksi == SEDANG_DIPROSES) : ?>
+                            <li class="breadcrumb-item">Transaksi Diproses</li>
+                        <?php elseif ($data->status_transaksi == SELESAI_TERKIRIM) : ?>
+                            <li class="breadcrumb-item">Transaksi Selesai</li>
+                        <?php elseif ($data->status_transaksi == DIBATALKAN) : ?>
+                            <li class="breadcrumb-item">Transaksi Dibatalkan</li>
                         <?php endif ?>
-                        <li class="breadcrumb-item">Detail Pesanan</li>
-                        <?php if ($this->uri->segment(2) == "pesanan_masuk") : ?>
-                            <li class="breadcrumb-item active">Pesanan Masuk</li>
-                        <?php elseif ($this->uri->segment(2) == "pesanan_diproses") : ?>
-                            <li class="breadcrumb-item active">Pesanan Diproses</li>
-                        <?php elseif ($this->uri->segment(2) == "pesanan_selesai") : ?>
-                            <li class="breadcrumb-item active">Pesanan Selesai</li>
-                        <?php elseif ($this->uri->segment(2) == "pesanan_dibatalkan") : ?>
-                            <li class="breadcrumb-item active">Pesanan Dibatalkan</li>
-                        <?php endif ?>
+                        <li class="breadcrumb-item active">Detail Pesanan</li>
                     </ol>
                 </div>
             </div>
@@ -38,36 +33,51 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <a href="<?= base_url() ?>transaksi/pesanan_masuk"><i class="fa fa-arrow-left"></i> Kembali</a>
+                        <?php if ($data->status_transaksi == BELUM_DIPROSES) : ?>
+                            <a href="<?= base_url() ?>transaksi/pesanan_masuk"><i class="fa fa-arrow-left"></i> Kembali</a>
+                        <?php elseif ($data->status_transaksi == SEDANG_DIPROSES) : ?>
+                            <a href="<?= base_url() ?>transaksi/pesanan_diproses"><i class="fa fa-arrow-left"></i> Kembali</a>
+                        <?php elseif ($data->status_transaksi == SELESAI_TERKIRIM) : ?>
+                            <a href="<?= base_url() ?>transaksi/pesanan_selesai"><i class="fa fa-arrow-left"></i> Kembali</a>
+                        <?php elseif ($data->status_transaksi == DIBATALKAN) : ?>
+                            <a href="<?= base_url() ?>transaksi/pesanan_dibatalkan"><i class="fa fa-arrow-left"></i> Kembali</a>
+                        <?php endif ?>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="info-box bg-light">
                             <div class="info-box-content">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <span class="info-box-text text-muted">Kode Transaksi</span>
-                                        <span class="info-box-number text-muted mb-0"><?= $data->kode_transaksi ?></span>
+                                    <div class="col-md-4 col-sm-6">
+                                        <span class="info-box-text text-muted"><b>Kode Transaksi</b></span>
+                                        <span class="text-muted mb-2"><?= $data->kode_transaksi ?></span>
 
-                                        <span class="info-box-text text-muted">Waktu Pemesanan</span>
-                                        <span class="info-box-number text-muted mb-0"><?= $data->created_at ?></span>
+                                        <span class="info-box-text text-muted pt-2"><b>Waktu Pemesanan</b></span>
+                                        <span class="text-muted mb-2"><?= $data->created_at ?></span>
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <span class="info-box-text text-muted">Nama Pemesan</span>
-                                        <span class="info-box-number text-muted mb-0"><?= $data->user->nama_user ?></span>
-
-                                        <span class="info-box-text text-muted">No HP</span>
-                                        <span class="info-box-number text-muted mb-0"><?= $data->nohp_transaksi ?></span>
-
-
+                                    <div class="col-md-4 col-sm-6">
+                                        <span class="info-box-text text-muted"><b>Nama Pemesan</b></span>
+                                        <span class="text-muted"><?= $data->user->nama_user ?></span>
+                                        
+                                        <?php $no_hp = preg_replace("/[+]/", "", $data->nohp_transaksi); ?>
+                                        <span class="info-box-text text-muted pt-2"><b>No HP</b> <a href="https://wa.me/<?= $no_hp ?>" target="_blank">(Hubungi via WA)</a></span>
+                                        <span class="text-muted"><?= $data->nohp_transaksi ?></span>
                                     </div>
-                                    <div class="col-md-4">
-                                        <span class="info-box-text text-muted">Alamat Pengiriman</span>
-                                        <span class="info-box-number text-muted mb-0"><?= $data->alamatdetail_transaksi . ", " . $data->alamat_transaksi ?></span>
-
-                                        <span class="info-box-text text-muted">Status Pemesanan</span>
-                                        <span class="info-box-number text-muted mb-0">
+                                    <div class="col-md-4 pt-sm-2">
+                                        <span class="info-box-text text-muted"><b>Alamat Pengiriman </b>  <a target="_blank" href="https://www.google.com/maps/dir/<?= $data->toko->alamat_toko ?>/<?= $data->alamat_transaksi ?>">(lihat di maps)</a></span>
+                                        <span class="text-muted mb-2"><?= $data->alamat_transaksi ?></span>
+                                    </div>
+                                </div>
+                                <div class="pt-2"></div>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-8">
+                                        <span class="info-box-text text-muted"><b>Catatan Pesanan</b></span>
+                                        <span class="text-muted mb-0"><?= $data->alamatdetail_transaksi ?></span>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <span class="info-box-text text-muted"><b>Status Pemesanan</b></span>
+                                        <span class="text-muted mb-0">
                                             <?php if ($data->status_transaksi == BELUM_DIPROSES) : ?>
                                                 Belum dikonfirmasi
                                             <?php elseif ($data->status_transaksi == SEDANG_DIPROSES) : ?>
@@ -82,7 +92,7 @@
                                 </div>
                             </div>
                         </div>
-                        Detail Pesanan
+                        <label for="">Detail Pesanan</label>
                         <div class="table-responsive">
                             <table id="" class="table table-bordered table-hover table-head-fixed">
                                 <thead>
@@ -116,13 +126,13 @@
                                                 <td><?= $detail->barang->nama_barang ?></td>
                                                 <td>
                                                     <?php if (isset($detail->hargadiskon_barang)) : ?>
-                                                        <del><?= $detail->hargajual_barang ?></del><?= $detail->hargadiskon_barang ?>
+                                                        <del><?= $detail->hargajual_barang ?></del>&nbsp;<?= $detail->hargadiskon_barang ?>
                                                     <?php else : ?>
                                                         <?= $detail->hargajual_barang ?>
                                                     <?php endif ?>
 
                                                 </td>
-                                                <td><?= $detail->banyak_barang ?> item</td>
+                                                <td><?= $detail->banyak_barang ?>&nbsp;item</td>
                                                 <td><?= $rpTotal ?></td>
                                             </tr>
                                         <?php endforeach ?>
@@ -131,15 +141,15 @@
                             </table>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-sm-4">
                                 <label for="ongkir">Ongkos Kirim</label>
                                 <input id="ongkir" class="form-control" type="text" value="<?= $data->ongkir_transaksi ?>" readonly>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-sm-4">
                                 <label for="total_harga">Total Harga</label>
                                 <input id="total_harga" class="form-control" type="text" value="<?= $sum ?>" readonly>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-sm-4">
                                 <label for="bayar">Total Bayar</label>
                                 <input id="bayar" class="form-control" type="text" value="<?= $sum + $data->ongkir_transaksi ?>" readonly>
                             </div>
@@ -163,8 +173,8 @@
 
                             <button type="submit" form="formProses" class="btn btn-primary">Pesanan Telah Terkirim</button>
 
-                        <?php else : ?>
-                            <a href="<?= base_url() ?>transaksi/pesanan_masuk" class="btn btn-primary">Kembali</a>
+                        <?php elseif ($data->status_transaksi == SELESAI_TERKIRIM) : ?>
+                            <a href="<?= base_url() ?>transaksi/pesanan_selesai" class="btn btn-primary">Kembali</a>
                         <?php endif ?>
                     </div>
                 </div>
