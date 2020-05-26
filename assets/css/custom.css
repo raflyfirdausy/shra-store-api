@@ -14,9 +14,14 @@
     margin: auto;
 }
 
-.social-profile:hover .profile-hvr,
-.social-wallpaper:hover .profile-hvr {
-    opacity: 1;
+.banner-area {
+    position: relative;
+    /* padding-top: 15px; */
+}
+
+.banner-area img {
+    width: 100%;
+    margin: auto;
 }
 
 .profile-hvr {
@@ -33,6 +38,27 @@
     -moz-transition: all ease-in-out 0.3s;
     -ms-transition: all ease-in-out 0.3s;
     transition: all ease-in-out 0.3s;
+}
+
+.banner-hvr {
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+    padding: 10px;
+    top: 0;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.61);
+    -webkit-transition: all ease-in-out 0.3s;
+    -moz-transition: all ease-in-out 0.3s;
+    -ms-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+
+.social-profile:hover .profile-hvr,
+.banner-area:hover .banner-hvr {
+    opacity: 1;
 }
 
 .image-upload input {

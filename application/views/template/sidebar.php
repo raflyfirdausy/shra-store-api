@@ -2,8 +2,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?= base_url() ?>dashboard" class="brand-link mx-0">
-        <img src="<?= base_url() ?>assets/img/doomuIcon_White.png" alt="Doomu Logo" class="brand-image" style="opacity: .8;">
-        <span class="brand-text font-weight-light" style="font-weight: 500!important;margin-left : 10px;"><b>Doomu</b></span>
+        <img src="<?= base_url() ?>assets/img/doomuIcon_White.png" alt="SHRA Logo" class="brand-image" style="opacity: .8;">
+        <span class="brand-text font-weight-light" style="font-weight: 500!important;margin-left : 10px;"><b>SHRA Store</b></span>
     </a>
 
     <!-- Sidebar -->
@@ -64,16 +64,10 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="<?= base_url() ?>banner" class="nav-link
-                    <?= ($this->uri->segment(1) == "banner") ? "active" : ""; ?>">
-                            <i class="nav-icon fas fa-image"></i>
-                            <p>
-                                Master Data Banner
-                            </p>
-                        </a>
-                    </li>
+
                 <?php endif ?>
+
+
 
                 <?php if ($this->userData->level_admin == LEVEL_ADMIN) : ?>
                     <!-- Menu Admin -->
@@ -84,6 +78,15 @@
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= base_url() ?>banner" class="nav-link
+                    <?= ($this->uri->segment(1) == "banner") ? "active" : ""; ?>">
+                            <i class="nav-icon fas fa-image"></i>
+                            <p>
+                                Master Data Banner
                             </p>
                         </a>
                     </li>

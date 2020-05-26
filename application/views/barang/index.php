@@ -33,11 +33,11 @@
                 Import Data Barang &nbsp;<i class="fa fa-upload text-sm"></i>
               </button>
             <?php elseif ($level == LEVEL_ADMIN) : ?>
-              &nbsp;atau&nbsp;
+              <!-- &nbsp;atau&nbsp; -->
               <!-- <a href="<?= base_url() ?>barang/ambil_barang" class="btn btn-info">Ambil Data Barang &nbsp;<i class="fa fa-download text-sm"></i></a> -->
-              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#ambilData">
+              <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#ambilData">
                 Ambil Data Barang &nbsp;<i class="fa fa-download text-sm"></i>
-              </button>
+              </button> -->
             <?php endif ?>
 
           </div>

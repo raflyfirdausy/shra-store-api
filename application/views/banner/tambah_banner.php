@@ -36,7 +36,7 @@
                                 <div class="row">
                                     <div class="media">
                                         <div class="banner-area">
-                                            <img class="img-fluid p-0" id="imgprev" src="<?= base_url() ?>assets/banner/banner1.jpg" alt="">
+                                            <img class="img-fluid p-0" id="imgprev" src="<?= base_url() ?>assets/img/doomuIcon_White.png" alt="">
                                             <div class="banner-hvr m-t-15 ">
                                                 <div class="image-upload">
                                                     <label for="imgInp">

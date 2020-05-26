@@ -11,7 +11,7 @@ class MY_Controller extends CI_Controller
         $CI = &get_instance(); //MENGGANTI $this
 
         $this->global_data = [
-            "app_name"          => "Doomu",            
+            "app_name"          => "SHRA",            
             "CI"                => $CI,
             "_session"          => $CI->session->userdata(INNO_SESSION),
             "title"             => ucwords($this->router->fetch_class())            
